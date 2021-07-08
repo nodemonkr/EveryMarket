@@ -25,7 +25,13 @@ import { FiMail, FiLock, FiUser, FiCalendar } from "react-icons/fi";
 //loader
 import Loader from "react-loader-spinner";
 
-const Signup = () => {
+// auth & redux
+import { connect } from "react-redux";
+import { signupUser } from "../auth/actions/userActions";
+import { useHistory } from "react-router-dom";
+
+const Signup = (signupUser) => {
+  const history = useHistory();
   return (
     <div>
       <StyledFormArea>
@@ -57,8 +63,9 @@ const Signup = () => {
               .required("Required")
               .oneOf([Yup.ref("password")], "passwords must match"),
           })}
-          onSubmit={(values, { setSubmitting }) => {
+          onSubmit={(values, { setSubmitting, setFieldError }) => {
             console.log(values);
+            signupUser(values, history, setFieldError, setSubmitting);
           }}
         >
           {/* ---login 버튼 클릭 로딩 구현 start ---*/}
@@ -126,4 +133,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default connect(null, { signupUser })(Signup);
