@@ -13,14 +13,8 @@ const db = mariadb.createPool({
 //   res.send("hi wordl");
 // });
 
-app.get("/", (req, res) => {
-  const mariaInsert =
-    "INSERT INTO movie-reviws (movieName, movieReview) VALUES ('inception','goodmovie')";
-  db.query(mariaInsert, (err, result) => {
-    res.send("hi wordl");
-  });
-});
+app.get("/", (req, res) => {});
 
-app.listen(3001, () => {
+app.listen(3000, () => {
   console.log("running on port 3001");
 });
