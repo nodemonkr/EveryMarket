@@ -13,7 +13,7 @@ const store = createStore(
   compose(applyMiddleware(...middlewares))
 );
 
-//세션 초기화, 스터어에 전달
+//세션 초기화, 스토어에 전달
 sessionService.initSessionService(store);
 
 export default store;
