@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
+
+//axios
+import Axios from "axios";
 
 //Pages
 import Home from "./pages/Home";
@@ -13,6 +16,18 @@ import { StyledContainer } from "./components/Styles";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 function App() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const submitLogin = () => {
+    Axios.post("http://localhost:3000/api/insert", {
+      email: email,
+      password: password,
+    }).then(() => {
+      alert("seccessful insert");
+    });
+  };
+
   return (
     <Router>
       <StyledContainer>

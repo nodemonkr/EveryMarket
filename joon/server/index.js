@@ -2,8 +2,9 @@ const express = require("express");
 const app = express();
 const mysql = require("mysql");
 const post = 3000;
-
 const cors = require("cors");
+
+app.use(express.json());
 app.use(cors());
 
 const db = mysql.createConnection({
@@ -19,7 +20,7 @@ const db = mysql.createConnection({
 
 app.get("/", (req, res) => {
   const sqlInsert =
-    "INSERT INTO login (email, password) VALUES('rhcp1323@gmail.com','123123123');";
+    "INSERT INTO login(email, password) VALUES('inception','good movie');";
   db.query(sqlInsert, (err, result) => {
     res.send("sqwdqwdqwdqdw");
   });
