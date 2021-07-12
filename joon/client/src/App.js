@@ -11,22 +11,12 @@ import Axios from "axios";
 import Home from "./pages/Home";
 //styled components
 import { StyledContainer } from "./components/Styles";
-
 //loader css
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const submitLogin = () => {
-    Axios.post("http://localhost:3000/api/insert", {
-      email: email,
-      password: password,
-    }).then(() => {
-      alert("seccessful insert");
-    });
-  };
 
   return (
     <Router>

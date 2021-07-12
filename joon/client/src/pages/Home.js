@@ -12,22 +12,7 @@ import Logo from "../assets/logo.png";
 const Home = () => {
   return (
     <div>
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          backgroundColor: "transparent",
-          width: "100%",
-          padding: "15px",
-          display: "flex",
-          justifyContent: "flex-start",
-        }}
-      >
-        <Avatar image={Logo} />
-      </div>
-      <StyledTitle size={65}>Welcome</StyledTitle>
-      <StyledSubTitle size={27}>Feel free to explore our</StyledSubTitle>
+      <Avatar image={Logo} />
       <ButtonGroup>
         <StyledButton to="/login">Login</StyledButton>
         <StyledButton to="/signup">Signup</StyledButton>
