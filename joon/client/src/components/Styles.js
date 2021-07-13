@@ -23,7 +23,7 @@ export const StyledContainer = styled.div`
   align-items: center;
 `;
 
-//Home
+//page - Login, Signup, Dashboard, Home
 
 export const StyledTitle = styled.h2`
   font-size: ${(props) => props.size}px;
@@ -179,3 +179,5 @@ export const CopyrightText = styled.p`
   text-align: center;
   color: ${colors.dark1};
 `;
+
+// page - home

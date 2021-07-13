@@ -15,9 +15,6 @@ import { StyledContainer } from "./components/Styles";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 function App() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
   return (
     <Router>
       <StyledContainer>

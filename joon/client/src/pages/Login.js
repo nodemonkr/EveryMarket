@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+
 // 서버전송용 라이브러리
 import Axios from "axios";
 
@@ -35,14 +37,7 @@ import { useHistory } from "react-router-dom";
 //import { response } from "express";
 
 //로그인함수구현
-const loginbutton = () => {
-  Axios.post("http://127.0.0.1:3100/login", {
-    email: "testemail",
-    password: "testpasswd",
-  }).then((res) => {
-    console.log(res);
-  });
-};
+
 // .then(function (response) {
 //   console.log(response);
 //   //응답에 따른 처리
@@ -53,6 +48,19 @@ const loginbutton = () => {
 // })
 const Login = (loginUser) => {
   const history = useHistory();
+
+  const [userEmail, setUserEmail] = useState("");
+  const [userPassword, setUserPassword] = useState("");
+
+  const loginbutton = () => {
+    Axios.post("http://127.0.0.1:3100/login", {
+      email: userEmail,
+      password: userPassword,
+    }).then((res) => {
+      console.log(res);
+    });
+  };
+
   return (
     <div>
       <StyledFormArea>
@@ -82,7 +90,7 @@ const Login = (loginUser) => {
                 values.password
             ); // 값테스트용 (정상)
             // 서버쪽 데이터전송(테스트용 데이터 송신)
-            var email = values.email;
+
             // // fetch test
             // fetch("http://127.0.0.1:3100/login", {
             //   method: "POST",
@@ -95,8 +103,8 @@ const Login = (loginUser) => {
             Axios.post({
               url: "http://127.0.0.1:3100/login",
               data: {
-                email: values.email,
-                password: values.password,
+                email: userEmail,
+                password: userPassword,
               }
                 .then(function (response) {
                   console.log(response);
@@ -125,7 +133,7 @@ const Login = (loginUser) => {
                 name="password"
                 type="password"
                 label="Password"
-                id="pw"
+                id="pw]"
                 placeholder="******"
                 icon={<FiLock />}
               />

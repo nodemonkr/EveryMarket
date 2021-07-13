@@ -20,7 +20,7 @@ db.connect((err) => {
 
 //로그인
 app.post("/login", (req, res) => {
-  console.log(req.body.email); //아이디와 비밀번호가 정상적으로 수신됬는지 확인
+  console.log(req.body.email, req.body.password); //아이디와 비밀번호가 정상적으로 수신됬는지 확인
   // 입력받은 id, pw 변수화처리 (원래는 이 변수를 이용해서 비밀번호 암호화 필수)
   // var tmp_email = req.email;
   // var tmp_pw = req.password;
