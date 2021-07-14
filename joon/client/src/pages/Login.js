@@ -20,7 +20,7 @@ import {
 import Logo from "../assets/logo.png";
 
 //formik
-import { Formik, Form } from "formik";
+// import { Formik, Form } from "formik";
 import { TextInput } from "../components/FormLib";
 import * as Yup from "yup";
 
@@ -32,7 +32,7 @@ import Loader from "react-loader-spinner";
 
 // auth & redux
 import { connect } from "react-redux";
-import { loginUser } from "../auth/actions/userActions";
+import { loginUser } from "../auth/actinos/userActions";
 import { useHistory } from "react-router-dom";
 //import { response } from "express";
 
@@ -52,6 +52,15 @@ const Login = (loginUser) => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
 
+  const onEmailHandle = (event) => {
+    setUserEmail(event.currentTarget.value);
+    console.log(userEmail);
+  };
+  const onPasswordHandle = (event) => {
+    setUserPassword(event.currentTarget.value);
+    console.log(userPassword);
+  };
+
   const loginbutton = () => {
     Axios.post("http://127.0.0.1:3100/login", {
       email: userEmail,
@@ -69,10 +78,10 @@ const Login = (loginUser) => {
           Member Login
         </StyledTitle>
 
-        <Formik
+        <form>
           initialValues={{ email: "", password: "" }}
-          //Yup을 사용한 유효성 검사 기능
-          validationSchema={Yup.object({
+          //Yup을 사용한 유효성 검사 기능 validationSchema=
+          {Yup.object({
             email: Yup.string()
               .email("Invalid email address")
               .required("Redquired"),
@@ -81,8 +90,8 @@ const Login = (loginUser) => {
               .max(30, "Password is too long")
               .required("Required"),
           })}
-          // server쪽으로 보내는 함수
-          onSubmit={(values, { setSubmitting, setFieldError }) => {
+          // server쪽으로 보내는 함수 onSubmit=
+          {(values, { setSubmitting, setFieldError }) => {
             console.log(
               "콘솔용 이메일값 : " +
                 values.email +
@@ -117,15 +126,15 @@ const Login = (loginUser) => {
               //loginUser(values, history, setFieldError, setSubmitting);
             });
           }}
-        >
           {/* ---login 버튼 클릭 로딩 구현 start ---*/}
           {({ isSubmitting }) => (
-            <Form>
+            <form>
               <TextInput
                 name="email"
-                type="text"
+                type="email"
                 label="Email"
-                id="email"
+                onChangeText={onEmailHandle}
+                value="email"
                 placeholder="test1@example.com"
                 icon={<FiMail />}
               />
@@ -133,7 +142,8 @@ const Login = (loginUser) => {
                 name="password"
                 type="password"
                 label="Password"
-                id="pw]"
+                onChangeText={onPasswordHandle}
+                value="password"
                 placeholder="******"
                 icon={<FiLock />}
               />
@@ -154,10 +164,10 @@ const Login = (loginUser) => {
                   />
                 )}
               </ButtonGroup>
-            </Form>
+            </form>
           )}
           {/* ---login 버튼 클릭 로딩 구현 end--- */}
-        </Formik>
+        </form>
         <ExtraText>
           New here? <TextLink to="/signup">Signup</TextLink>{" "}
         </ExtraText>
@@ -167,4 +177,4 @@ const Login = (loginUser) => {
   );
 };
 
-export default connect(null, { loginUser })(Login);
+//export default connect(null, { loginUser })(Login);
