@@ -1,24 +1,29 @@
-import {
-  StyledTitle,
-  StyledSubTitle,
-  Avatar,
-  StyledButton,
-  ButtonGroup,
-} from "../components/Styles";
+import { Link } from "react-router-dom";
 
-//Logo
-import Logo from "../assets/logo.png";
+//컴포넌트
+import Header from "../components/Header";
+import Sidebar from "../components/Sidebar";
+import HomeScreen from "../components/HomeScreen";
+
+//css
+import styled from "styled-components";
 
 const Home = () => {
   return (
     <div>
-      <Avatar image={Logo} />
-      <ButtonGroup>
-        <StyledButton to="/login">Login</StyledButton>
-        <StyledButton to="/signup">Signup</StyledButton>
-      </ButtonGroup>
+      {/* navbar입니다 */}
+      <Header></Header>
+      {/* navbar끝 */}
+      <Body>
+        <Sidebar></Sidebar>
+        <HomeScreen></HomeScreen>
+      </Body>
     </div>
   );
 };
 
 export default Home;
+
+const Body = styled.div`
+  display: flex;
+`;

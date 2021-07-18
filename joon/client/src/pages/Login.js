@@ -1,180 +1,50 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
-// 서버전송용 라이브러리
-import Axios from "axios";
-
-//styled components
-import {
-  StyledTextInput,
-  StyledFormArea,
-  StyledFormButton,
-  StyledLabel,
-  Avatar,
-  StyledTitle,
-  colors,
-  ButtonGroup,
-  ExtraText,
-  TextLink,
-  CopyrightText,
-} from "../components/Styles";
-import Logo from "../assets/logo.png";
-
-//formik
-// import { Formik, Form } from "formik";
-import { TextInput } from "../components/FormLib";
-import * as Yup from "yup";
-
-//icons
-import { FiMail, FiLock } from "react-icons/fi";
-
-//loader
-import Loader from "react-loader-spinner";
-
-// auth & redux
-import { connect } from "react-redux";
-import { loginUser } from "../auth/actinos/userActions";
-import { useHistory } from "react-router-dom";
-//import { response } from "express";
-
-//로그인함수구현
-
-// .then(function (response) {
-//   console.log(response);
-//   //응답에 따른 처리
-// })
-// .catch(function (error) {
-//   console.log(error);
-//   // error에따른 처리
-// })
-const Login = (loginUser) => {
-  const history = useHistory();
-
+const Login = () => {
+  // 데이터 저장공간
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
 
+  // form데이터 이벤트핸들러 처리 함수
   const onEmailHandle = (event) => {
     setUserEmail(event.currentTarget.value);
-    console.log(userEmail);
   };
   const onPasswordHandle = (event) => {
     setUserPassword(event.currentTarget.value);
-    console.log(userPassword);
   };
-
-  const loginbutton = () => {
-    Axios.post("http://127.0.0.1:3100/login", {
-      email: userEmail,
-      password: userPassword,
-    }).then((res) => {
-      console.log(res);
-    });
+  const onSubmit = () => {
+    console.log("전송완료");
+    console.log(userEmail + userPassword);
+    // Step1. Login정보 확인 (공백여부, 조건)
+    // Step2. 여기서 axios로 서버로 전송
   };
 
   return (
-    <div>
-      <StyledFormArea>
-        <Avatar image={Logo} />
-        <StyledTitle color={colors.theme} size={30}>
-          Member Login
-        </StyledTitle>
-
-        <form>
-          initialValues={{ email: "", password: "" }}
-          //Yup을 사용한 유효성 검사 기능 validationSchema=
-          {Yup.object({
-            email: Yup.string()
-              .email("Invalid email address")
-              .required("Redquired"),
-            password: Yup.string()
-              .min(8, " Password is too short")
-              .max(30, "Password is too long")
-              .required("Required"),
-          })}
-          // server쪽으로 보내는 함수 onSubmit=
-          {(values, { setSubmitting, setFieldError }) => {
-            console.log(
-              "콘솔용 이메일값 : " +
-                values.email +
-                "콘솔용 비밀번호" +
-                values.password
-            ); // 값테스트용 (정상)
-            // 서버쪽 데이터전송(테스트용 데이터 송신)
-
-            // // fetch test
-            // fetch("http://127.0.0.1:3100/login", {
-            //   method: "POST",
-            //   body: JSON.parse(email),
-            //   headers: {
-            //     "content-Type": "application/json",
-            //   },
-            //});
-
-            Axios.post({
-              url: "http://127.0.0.1:3100/login",
-              data: {
-                email: userEmail,
-                password: userPassword,
-              }
-                .then(function (response) {
-                  console.log(response);
-                  //응답에 따른 처리
-                })
-                .catch(function (error) {
-                  console.log(error);
-                  // error에따른 처리
-                }),
-              //loginUser(values, history, setFieldError, setSubmitting);
-            });
-          }}
-          {/* ---login 버튼 클릭 로딩 구현 start ---*/}
-          {({ isSubmitting }) => (
-            <form>
-              <TextInput
-                name="email"
-                type="email"
-                label="Email"
-                onChangeText={onEmailHandle}
-                value="email"
-                placeholder="test1@example.com"
-                icon={<FiMail />}
-              />
-              <TextInput
-                name="password"
-                type="password"
-                label="Password"
-                onChangeText={onPasswordHandle}
-                value="password"
-                placeholder="******"
-                icon={<FiLock />}
-              />
-              <ButtonGroup>
-                {!isSubmitting && (
-                  //<StyledFormButton type="submit" onClick={this.loginbutton()}>
-                  <StyledFormButton onClick={loginbutton()}>
-                    Login
-                  </StyledFormButton>
-                )}
-
-                {isSubmitting && (
-                  <Loader
-                    type="ThreeDots"
-                    color={colors.theme}
-                    height={49}
-                    width={100}
-                  />
-                )}
-              </ButtonGroup>
-            </form>
-          )}
-          {/* ---login 버튼 클릭 로딩 구현 end--- */}
-        </form>
-        <ExtraText>
-          New here? <TextLink to="/signup">Signup</TextLink>{" "}
-        </ExtraText>
-      </StyledFormArea>
-      <CopyrightText>All rights reserved ©2020</CopyrightText>
-    </div>
+    <form>
+      <div>
+        <input
+          name="email"
+          type="email"
+          onChange={onEmailHandle}
+          // value="email"
+        />
+      </div>
+      <div>
+        <input
+          name="password"
+          type="password"
+          onChange={onPasswordHandle}
+          // value="password"
+        />
+      </div>
+      <div>
+        <button onClick={onSubmit()}>로그인</button>
+        <button>
+          <Link to="/signup"> 회원가입</Link>
+        </button>
+      </div>
+    </form>
   );
 };
-
-//export default connect(null, { loginUser })(Login);
+export default Login;
