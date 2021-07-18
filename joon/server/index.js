@@ -1,44 +1,53 @@
 const express = require("express");
 const app = express();
 const mysql = require("mysql");
-const bodyParsers = require("body-parser");
+
+// bodyParsers는 express에 기본 포함이 됩니다.더이상 사용하지 않습니다
+// const bodyParsers = require("body-parser");
+
+//파일 업로드
+const fileupload = require("express-fileupload");
+
 // 서버포트
-const post = 3100;
+const port = 5000;
 const db = require("../server/config/db");
 const cors = require("cors");
 
 app.use(express.json());
 app.use(cors());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-app.use(bodyParsers.json());
-app.use(bodyParsers.urlencoded({ extended: false }));
+//서버 작동 test(완료후 주석처리)
+// app.get("/api/hello", (req, res) => {
+//   res.send({ message: "hello express" });
+// });
 
-// connect to our database
-db.connect((err) => {
-  if (err) throw err;
+app.get("/api/customers", (req, res) => {
+  res.send([
+    {
+      id: "0",
+      name: "simson",
+      age: 20,
+      image: "https://placeimg.com/64/64/3",
+    },
+    {
+      id: "1",
+      name: "risa",
+      age: 15,
+      image: "https://placeimg.com/64/64/2",
+    },
+    {
+      id: "2",
+
+      name: "jun",
+      age: 31,
+      image: "https://placeimg.com/64/64/1",
+    },
+  ]);
 });
 
-//로그인
-app.post("/login", (req, res) => {
-  console.log(req.body.email, req.body.password); //아이디와 비밀번호가 정상적으로 수신됬는지 확인
-  // 입력받은 id, pw 변수화처리 (원래는 이 변수를 이용해서 비밀번호 암호화 필수)
-  // var tmp_email = req.email;
-  // var tmp_pw = req.password;
-  // console.log("로그인 처리에 필요한데이터 :" + tmp_email + tmp_pw);
-  // db.query(
-  //   "INSERT INTO login(email, password) VALUES(?,?)",
-  //   [email, password],
-  //   (err, result) => {
-  //     console.log(err);
-  //   }
-  // );
-});
-
-//login은 post로 받아서 처리할것 (값을 요청하는것이아닌 로그인을 db에 요청하는것)
-// passport 추후에 구성할것
-
-// set app port
-
-app.listen(post, () => {
-  console.log(`listening at http://localhost:${post}`);
+//port 주소 설정
+app.listen(port, () => {
+  console.log(`listening at http://localhost:${port}`);
 });

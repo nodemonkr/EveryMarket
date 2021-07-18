@@ -7,7 +7,7 @@ import Upload from "./pages/Upload";
 import Auction from "./pages/Auction";
 
 //axios
-import Axios from "axios";
+// import Axios from "axios";
 
 //Pages
 import Home from "./pages/Home";
