@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Customer from "./Customer";
-// import Axios from "axios";
+import Axios from "axios";
 
 function HomeScreen() {
-  //3100포트 노드 서버에서 id.name.age.image 값 가져오기
   const [customers, setCustomers] = useState("");
 
+  //5000포트 노드 서버에서 id.name.age.image 값 가져오기
   useEffect(() => {
     callApi()
-      .then((res) => console.log(res)) // useEffect를 통해 callApi 함수 실행
+      //callApi를 호출하여 setCustomers에 값을 넣어주었습니다
+      .then((res) => setCustomers(res))
       .catch((err) => console.log("this is error " + err));
   }, []);
 
-  async function callApi() {
-    const response = await fetch("/api/customers"); // express rest api의 해당 주소로 접근
-    const body = await response.json(); // 해당 주소의 데이터를 json 화
-    setCustomers(response.data.id);
+  const callApi = async () => {
+    const response = await fetch("http://localhost:5000/api/customers");
+    const body = await response.json();
     return body;
-  }
+  };
+  //5000포트 노드 서버에서 id.name.age.image 값 가져오기 끝
 
   return (
     <div>
@@ -29,7 +30,6 @@ function HomeScreen() {
             );
           })
         : ""}
-      <Container>i am screen</Container>
     </div>
   );
 }
