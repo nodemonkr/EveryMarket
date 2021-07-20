@@ -1,10 +1,10 @@
 import React from "react";
+import CustomerAdd from "../components/Customer/CustomerAdd";
 
 function Upload() {
   return (
     <div>
-      {" "}
-      <input type="file" name="file" onChange={null} />
+      <CustomerAdd></CustomerAdd>
     </div>
   );
 }

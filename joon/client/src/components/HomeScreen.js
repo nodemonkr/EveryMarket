@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Customer from "./Customer";
+import Customer from "./Customer/Customer";
 import Axios from "axios";
 
 function HomeScreen() {
   const [customers, setCustomers] = useState("");
 
-  //5000포트 노드 서버에서 id.name.age.image 값 가져오기
+  //5000포트 노드 서버에서 id.name.age.image 값 가져옵니다
   useEffect(() => {
     callApi()
       //callApi를 호출하여 setCustomers에 값을 넣어주었습니다
@@ -19,7 +19,6 @@ function HomeScreen() {
     const body = await response.json();
     return body;
   };
-  //5000포트 노드 서버에서 id.name.age.image 값 가져오기 끝
 
   return (
     <div>
