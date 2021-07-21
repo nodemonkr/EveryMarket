@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { post } from "axios";
+import Axios from "axios";
 
 function CustomerAdd() {
   const [file, setFile] = useState(null);
@@ -9,10 +9,10 @@ function CustomerAdd() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    addCustomer();
-    // .then((response) => {
-    //   console.log(response.data);
-    // });
+    addCustomer().then((response) => {
+      console.log(response.data);
+    });
+    // window.location.reload();
   };
 
   const handleFileChange = (e) => {
@@ -21,21 +21,26 @@ function CustomerAdd() {
   };
 
   const handleValueChange = (e) => {
-    setName(e.target.value.age);
-    setAge(e.target.value.name);
+    e.preventDefault();
+    if (e.target.name === "age") {
+      setAge(e.target.value);
+    } else if (e.target.name === "name") {
+      setName(e.target.value);
+    }
   };
 
   const addCustomer = () => {
     const url = "/api/customers";
     const formData = new FormData();
     formData.append("image", file);
-    formData.append("name", age);
-    formData.append("age", file);
+    formData.append("name", name);
+    formData.append("age", age);
     const config = {
       headers: {
         "content-type": "multipart/form-data",
       },
     };
+    return Axios.post(url, formData, config);
   };
 
   return (

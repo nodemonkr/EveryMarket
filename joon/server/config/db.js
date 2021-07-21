@@ -1,5 +1,6 @@
 const mariadb = require("mariadb");
 
+//MariaDB 접속 정보를 가진 pool 객체 및 커넥터 함수 구현
 const pool = mariadb.createPool({
   host: "localhost",
   user: "root",

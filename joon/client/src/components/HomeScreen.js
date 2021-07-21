@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Customer from "./Customer/Customer";
+import CustomerAdd from "./Customer/CustomerAdd";
 import Axios from "axios";
 
 function HomeScreen() {
@@ -22,6 +23,7 @@ function HomeScreen() {
 
   return (
     <div>
+      <CustomerAdd />
       {customers
         ? customers.map((c) => {
             return (
