@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Axios from "axios";
+import { post } from "axios";
 
 function CustomerAdd() {
   const [file, setFile] = useState(null);
@@ -12,7 +12,8 @@ function CustomerAdd() {
     addCustomer().then((response) => {
       console.log(response.data);
     });
-    // window.location.reload();
+
+    window.location.reload();
   };
 
   const handleFileChange = (e) => {
@@ -30,7 +31,7 @@ function CustomerAdd() {
   };
 
   const addCustomer = () => {
-    const url = "/api/customers";
+    const url = "http://localhost:5000/api/customers";
     const formData = new FormData();
     formData.append("image", file);
     formData.append("name", name);
@@ -40,7 +41,7 @@ function CustomerAdd() {
         "content-type": "multipart/form-data",
       },
     };
-    return Axios.post(url, formData, config);
+    return post(url, formData, config);
   };
 
   return (
