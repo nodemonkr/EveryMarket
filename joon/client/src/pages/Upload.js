@@ -1,28 +1,74 @@
-import React, { useState, useEffect } from "react";
-import CustomerAdd from "../components/Customer/CustomerAdd";
+import React, { useState } from "react";
+import { post } from "axios";
 
 function Upload() {
-  const [customers, setCustomers] = useState("");
+  const [file, setFile] = useState(null);
+  const [name, setName] = useState("");
+  const [age, setAge] = useState("");
+  const [fileName, setFileName] = useState("");
 
-  //5000포트 노드 서버에서 id.name.age.image 값 가져옵니다
-  useEffect(() => {
-    callApi()
-      //callApi를 호출하여 setCustomers에 값을 넣어주었습니다
-      .then((res) => setCustomers(res))
-      .catch((err) => console.log("this is error " + err));
-  }, []);
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    addCustomer().then((response) => {
+      console.log(response.data);
+    });
 
-  //api/customers에 접속을해서 데이터를 josn형태로 body에 답아주는 callApi 함수입니다.
-  const callApi = async () => {
-    const response = await fetch("http://localhost:5000/api/customers");
-    const body = await response.json();
-    return body;
+    window.location.reload();
+  };
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+    setFileName(e.target.value);
+  };
+
+  const handleValueChange = (e) => {
+    e.preventDefault();
+    if (e.target.name === "age") {
+      setAge(e.target.value);
+    } else if (e.target.name === "name") {
+      setName(e.target.value);
+    }
+  };
+
+  //axios를 이용해 서버로 데이터 전송
+  const addCustomer = () => {
+    const url = "http://localhost:5000/api/customers";
+    const formData = new FormData();
+    formData.append("image", file);
+    formData.append("name", name);
+    formData.append("age", age);
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+    return post(url, formData, config);
   };
 
   return (
-    <div>
-      <CustomerAdd></CustomerAdd>
-    </div>
+    <form action="" onSubmit={handleFormSubmit}>
+      나이:{" "}
+      <input type="text" name="age" value={age} onChange={handleValueChange} />
+      <br />
+      이름:{" "}
+      <input
+        type="text"
+        name="name"
+        value={name}
+        onChange={handleValueChange}
+      />
+      <br />
+      사진:{" "}
+      <input
+        type="file"
+        name="file"
+        file={file}
+        value={fileName}
+        onChange={handleFileChange}
+      />
+      <br />
+      <button type="submit">추가</button>
+    </form>
   );
 }
 

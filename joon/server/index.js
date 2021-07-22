@@ -38,9 +38,8 @@ app.get("/api/customers", (req, res) => {
   });
 });
 
-//sql로 데이터 추가
+//프론트에서 sql로 데이터 추가
 app.use("/image", express.static("./upload"));
-
 app.post("/api/customers", upload.single("image"), (req, res) => {
   let sql = "INSERT INTO customer VALUES(null,?,?,?)";
   let image = "/image/" + req.file.filename;

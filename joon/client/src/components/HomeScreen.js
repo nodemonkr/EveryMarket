@@ -24,7 +24,6 @@ function HomeScreen() {
 
   return (
     <div>
-      <CustomerAdd />
       {customers
         ? customers.map((c) => {
             return (
