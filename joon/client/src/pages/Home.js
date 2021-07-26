@@ -11,9 +11,7 @@ import styled from "styled-components";
 const Home = () => {
   return (
     <div>
-      {/* navbar입니다 */}
       <Header></Header>
-      {/* navbar끝 */}
       <Body>
         <Sidebar></Sidebar>
         <HomeScreen></HomeScreen>
