@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
@@ -14,7 +13,7 @@ import Home from "./pages/Home";
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <Switch>
         <Route path="/signup">
           <Signup />
@@ -35,7 +34,7 @@ function App() {
           <Home />
         </Route>
       </Switch>
-    </Router>
+    </BrowserRouter>
   );
 }
 

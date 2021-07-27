@@ -6,15 +6,16 @@ import MenuIcon from "@material-ui/icons/Menu";
 import VideoCallIcon from "@material-ui/icons/VideoCall";
 import SearchIcon from "@material-ui/icons/Search";
 import AppsIcon from "@material-ui/icons/Apps";
+import NotificationsIcon from "@material-ui/icons/Notifications";
 
 function Header() {
   return (
     <Container>
       <MenuIcon />
-      <Img
+      {/* <Img
         src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg"
         alt=""
-      />
+      /> */}
       <button>
         <Link to="/login">login</Link>
       </button>
@@ -22,7 +23,8 @@ function Header() {
       <SearchIcon />
       <Input type="text" />
       <VideoCallIcon />
-      <AppsIcon></AppsIcon>
+      <AppsIcon />
+      <NotificationsIcon />
     </Container>
   );
 }
