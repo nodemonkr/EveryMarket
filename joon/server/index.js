@@ -51,3 +51,11 @@ app.post("/api/customers", upload.single("image"), (req, res) => {
     res.send(rows);
   });
 });
+
+//login 데이터를
+
+// app.get("/api/user", (req, res) => {
+//   connection.query("SELECT * FROM USER", (err, rows, fields) => {
+//     res.send(rows);
+//   });
+// });

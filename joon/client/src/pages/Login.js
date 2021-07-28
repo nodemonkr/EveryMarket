@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../auth/actions/user_action";
 
 const Login = () => {
+  const dispatch = useDispatch();
+
   // 데이터 저장공간
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
@@ -13,33 +17,41 @@ const Login = () => {
   const onPasswordHandle = (event) => {
     setUserPassword(event.currentTarget.value);
   };
-  const onSubmit = () => {
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
     console.log("전송완료");
-    console.log(userEmail + userPassword);
-    // Step1. Login정보 확인 (공백여부, 조건)
-    // Step2. 여기서 axios로 서버로 전송
+    console.log(userEmail, "email");
+
+    let body = {
+      email: userEmail,
+      password: userPassword,
+    };
+
+    dispatch(loginUser(body));
   };
 
   return (
-    <form>
+    <form onSubmit={onSubmitHandler}>
       <div>
         <input
           name="email"
           type="email"
           onChange={onEmailHandle}
-          // value="email"
+          placeholder="email"
+          value={userEmail}
         />
       </div>
       <div>
         <input
           name="password"
           type="password"
+          placeholder="password"
           onChange={onPasswordHandle}
-          // value="password"
+          value={userPassword}
         />
       </div>
       <div>
-        <button onClick={onSubmit()}>로그인</button>
+        <button type="submit">로그인</button>
         <button>
           <Link to="/signup"> 회원가입</Link>
         </button>
