@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { loginUser } from "../auth/actions/user_action";
+import { loginUser } from "../auth/actions/user-action";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -20,14 +20,8 @@ const Login = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     console.log("전송완료");
-    console.log(userEmail, "email");
 
-    let body = {
-      email: userEmail,
-      password: userPassword,
-    };
-
-    dispatch(loginUser(body));
+    dispatch(loginUser());
   };
 
   return (

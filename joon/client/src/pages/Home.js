@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
 
 //컴포넌트
 import Header from "../components/Header";
@@ -7,8 +8,13 @@ import HomeScreen from "../components/HomeScreen";
 
 //css
 import styled from "styled-components";
+import axios from "../../../server/node_modules/axios";
 
 const Home = () => {
+  // useEffect() => {
+  //   axios.get("")
+  // }
+
   return (
     <div>
       <Header></Header>

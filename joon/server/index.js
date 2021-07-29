@@ -52,10 +52,6 @@ app.post("/api/customers", upload.single("image"), (req, res) => {
   });
 });
 
-//login 데이터를
+//회원가입 데이터 SQL에 보내기 (성공)
 
-// app.get("/api/user", (req, res) => {
-//   connection.query("SELECT * FROM USER", (err, rows, fields) => {
-//     res.send(rows);
-//   });
-// });
+//로그인 구현입니다.
