@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, connect } from "react-redux";
 import { loginUser } from "../auth/actions/user-action";
 
 const Login = () => {
@@ -11,17 +11,16 @@ const Login = () => {
   const [userPassword, setUserPassword] = useState("");
 
   // form데이터 이벤트핸들러 처리 함수
-  const onEmailHandle = (event) => {
-    setUserEmail(event.currentTarget.value);
+  const onEmailHandle = (e) => {
+    setUserEmail(e.currentTarget.value);
   };
-  const onPasswordHandle = (event) => {
-    setUserPassword(event.currentTarget.value);
+  const onPasswordHandle = (e) => {
+    setUserPassword(e.currentTarget.value);
   };
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    console.log("전송완료");
 
-    dispatch(loginUser());
+    // dispatch(loginUser(userEmail, userPassword));
   };
 
   return (
@@ -53,4 +52,5 @@ const Login = () => {
     </form>
   );
 };
+
 export default Login;

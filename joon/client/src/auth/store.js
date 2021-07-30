@@ -1,7 +1,10 @@
 import { createStore } from "redux";
 import user_reducer from "./reducers/user_reducer";
 import { composeWithDevTools } from "redux-devtools-extension";
+import { loginUser } from "../auth/actions/user-action";
 
-let store = createStore(user_reducer, composeWithDevTools());
+const store = createStore(user_reducer, composeWithDevTools());
+
+store.dispatch(loginUser());
 
 export default store;

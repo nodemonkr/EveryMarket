@@ -55,3 +55,21 @@ app.post("/api/customers", upload.single("image"), (req, res) => {
 //회원가입 데이터 SQL에 보내기 (성공)
 
 //로그인 구현입니다.
+//로그인 데이터 가져옵니다.
+app.get("/api/login", (req, res) => {
+  connection.query("SELECT * FROM USERDATA", (err, rows, fields) => {
+    res.send(rows);
+  });
+});
+
+//프론트에서 sql로 데이터 추가
+app.post("/api/login", (req, res) => {
+  let sql = "INSERT INTO USERDATA VALUES(null,?,?)";
+  let email = req.body.email;
+  let password = req.body.password;
+
+  let params = [email, password];
+  connection.query(sql, params, (err, rows, fields) => {
+    res.send(rows);
+  });
+});

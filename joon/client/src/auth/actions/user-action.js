@@ -2,12 +2,12 @@ import axios from "axios";
 import { LOGIN_USER } from "./types";
 
 export function loginUser(dataToSubmit) {
-  const request = axios
-    .post("/api/login", dataToSubmit)
-    .then((response) => response.data);
+  const req = axios
+    .post("http://localhost:5000/api/login", dataToSubmit)
+    .then((res) => res.data);
 
   return {
     type: LOGIN_USER,
-    payload: request,
+    payload: req,
   };
 }
