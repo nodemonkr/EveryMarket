@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, connect } from "react-redux";
 import { loginUser } from "../auth/actions/user-action";
+import axios from "axios";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -20,7 +21,24 @@ const Login = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
-    // dispatch(loginUser(userEmail, userPassword));
+    let body = {
+      email: userEmail,
+      password: userPassword,
+    };
+
+    dispatch(loginUser(body));
+  };
+  // 데이터 전송 테스트 함수
+  const onClickLogin = () => {
+    console.log("로그인 버튼이 발동되었습니다.");
+    axios
+      .post("/api/login", {
+        userid: userEmail,
+        userpassword: userPassword,
+        //userpassword: userPassword,
+      })
+      .then((res) => console.log(res))
+      .catch();
   };
 
   return (
@@ -44,7 +62,9 @@ const Login = () => {
         />
       </div>
       <div>
-        <button type="submit">로그인</button>
+        <button type="button" onClick={onClickLogin}>
+          로그인
+        </button>
         <button>
           <Link to="/signup"> 회원가입</Link>
         </button>

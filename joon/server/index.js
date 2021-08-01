@@ -56,14 +56,26 @@ app.post("/api/customers", upload.single("image"), (req, res) => {
 
 //로그인 구현입니다.
 //로그인 데이터 가져옵니다.
-app.get("/api/login", (req, res) => {
-  connection.query("SELECT * FROM USERDATA", (err, rows, fields) => {
-    res.send(rows);
-  });
+app.post("/api/login", (req, res) => {
+  console.log(
+    "[서버] 데이터 수신 성공 아이디 :",
+    req.body.userid,
+    "비밀번호 :",
+    req.body.userpassword
+  );
+  const userdata_id = req.body.userid;
+  const userdata_pw = req.body.userpassword;
+  // db처리
+  // 비밀번호 암호화 ( userdata_pw )
+  console.log("비밀번호 암호화 사용할 변수 데이터 : ", userdata_pw);
+  res.send("");
+  //res.send("데이터는 비어있지만 서버는 살아있습니다.");
+  //connection.query("SELECT * FROM USERDATA", (err, rows, fields) => {
+  //  res.send(rows);
 });
 
 //프론트에서 sql로 데이터 추가
-app.post("/api/login", (req, res) => {
+app.post("/api/log", (req, res) => {
   let sql = "INSERT INTO USERDATA VALUES(null,?,?)";
   let email = req.body.email;
   let password = req.body.password;
