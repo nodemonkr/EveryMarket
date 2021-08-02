@@ -71,7 +71,7 @@ app.post("/api/login", (req, res) => {
 });
 
 //회원가입 구현입니다.
-//프론트로부터 데이터 수신
+//프론트로부터 데이터 수신 및 mysql 회원정보 전송
 app.post("/api/signup", (req, res) => {
   console.log(
     "[서버]회원가입 데이터 수신 성공 ",
@@ -89,7 +89,7 @@ app.post("/api/signup", (req, res) => {
   let sql = "INSERT INTO USERDATA VALUES(null,?,?,?)";
   let params = [signupData_name, signupData_id, signupData_pw];
   connection.query(sql, params, (err, rows, fields) => {
-    res.send(rows, err);
+    res.send(rows);
     console.log("[db]회원가입 정보 추가 성공");
   });
 
@@ -99,7 +99,7 @@ app.post("/api/signup", (req, res) => {
 
   // 비밀번호 암호화 ( userdata_pw )
   console.log("비밀번호 암호화 사용할 변수 데이터 : ", signupData_pw);
-  res.send("");
+  // res.send("");
 });
 
 // app.post("/api/signup", (req, res) => {
