@@ -16,7 +16,7 @@ function HomeScreen() {
 
   //api/customers에 접속을해서 데이터를 josn형태로 body에 답아주는 callApi 함수입니다.
   const callApi = async () => {
-    const response = await fetch("http://localhost:5000/api/customers");
+    const response = await fetch("/api/customers");
     const body = await response.json();
     return body;
   };

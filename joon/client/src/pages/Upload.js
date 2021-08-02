@@ -32,7 +32,7 @@ function Upload() {
 
   //axios를 이용해 서버로 데이터 전송
   const addCustomer = () => {
-    const url = "http://localhost:5000/api/customers";
+    const url = "/api/customers";
     const formData = new FormData();
     formData.append("image", file);
     formData.append("name", name);

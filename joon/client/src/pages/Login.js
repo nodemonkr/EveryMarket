@@ -5,7 +5,7 @@ import { loginUser } from "../auth/actions/user-action";
 import axios from "axios";
 
 const Login = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   // 데이터 저장공간
   const [userEmail, setUserEmail] = useState("");
@@ -18,23 +18,15 @@ const Login = () => {
   const onPasswordHandle = (e) => {
     setUserPassword(e.currentTarget.value);
   };
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
 
-    let body = {
-      email: userEmail,
-      password: userPassword,
-    };
-
-    dispatch(loginUser(body));
-  };
   // 데이터 전송 테스트 함수
-  const onClickLogin = () => {
+  const onClickLogin = (e) => {
+    e.preventDefault();
     console.log("로그인 버튼이 발동되었습니다.");
     axios
       .post("/api/login", {
-        userid: userEmail,
-        userpassword: userPassword,
+        userId: userEmail,
+        userPassword: userPassword,
         //userpassword: userPassword,
       })
       .then((res) => console.log(res))
@@ -42,7 +34,7 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={onSubmitHandler}>
+    <form>
       <div>
         <input
           name="email"

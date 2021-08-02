@@ -52,36 +52,65 @@ app.post("/api/customers", upload.single("image"), (req, res) => {
   });
 });
 
-//회원가입 데이터 SQL에 보내기 (성공)
-
 //로그인 구현입니다.
-//로그인 데이터 가져옵니다.
+//프론트에서 서버로 데이터를 전송뒤 서버에서 데이터 받아보았습니다.
 app.post("/api/login", (req, res) => {
   console.log(
     "[서버] 데이터 수신 성공 아이디 :",
-    req.body.userid,
+    req.body.userId,
     "비밀번호 :",
-    req.body.userpassword
+    req.body.userPassword
   );
-  const userdata_id = req.body.userid;
-  const userdata_pw = req.body.userpassword;
+  const userdata_id = req.body.userId;
+  const userdata_pw = req.body.userPassword;
   // db처리
+
   // 비밀번호 암호화 ( userdata_pw )
   console.log("비밀번호 암호화 사용할 변수 데이터 : ", userdata_pw);
   res.send("");
-  //res.send("데이터는 비어있지만 서버는 살아있습니다.");
-  //connection.query("SELECT * FROM USERDATA", (err, rows, fields) => {
-  //  res.send(rows);
 });
 
-//프론트에서 sql로 데이터 추가
-app.post("/api/log", (req, res) => {
-  let sql = "INSERT INTO USERDATA VALUES(null,?,?)";
-  let email = req.body.email;
-  let password = req.body.password;
+//회원가입 구현입니다.
+//프론트로부터 데이터 수신
+app.post("/api/signup", (req, res) => {
+  console.log(
+    "[서버]회원가입 데이터 수신 성공 ",
+    "이름 :",
+    req.body.signupName,
+    "아이디 :",
+    req.body.signupId,
+    "비밀번호 :",
+    req.body.signupPassword
+  );
+  const signupData_name = req.body.signupName;
+  const signupData_id = req.body.signupId;
+  const signupData_pw = req.body.signupPassword;
 
-  let params = [email, password];
+  let sql = "INSERT INTO USERDATA VALUES(null,?,?,?)";
+  let params = [signupData_name, signupData_id, signupData_pw];
   connection.query(sql, params, (err, rows, fields) => {
-    res.send(rows);
+    res.send(rows, err);
+    console.log("[db]회원가입 정보 추가 성공");
   });
+
+  //프론트에서 sql로 데이터추가
+
+  // db처리
+
+  // 비밀번호 암호화 ( userdata_pw )
+  console.log("비밀번호 암호화 사용할 변수 데이터 : ", signupData_pw);
+  res.send("");
 });
+
+// app.post("/api/signup", (req, res) => {
+//   const signupName = req.body.signupName;
+//   const signupId = req.body.signupId;
+//   const signupPw = req.body.signupPassword;
+
+//   let sql = "INSERT INTO userdata VALUES(null,?,?,?)";
+//   let params = [signupName, signupId, signupPw];
+//   connection.query(sql, params, (err, rows, fields) => {
+//     res.send(rows);
+//     console.log("[db]회원가입 정보 추가 성공");
+//   });
+// });
