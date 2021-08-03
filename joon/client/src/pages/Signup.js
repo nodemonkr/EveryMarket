@@ -39,21 +39,6 @@ const Signup = () => {
       .catch();
   };
 
-  // const onClickSignup = () => {
-  //   console.log("회원가입 버튼이 발동되었습니다.");
-  //   const url = "/api/signup";
-  //   const formData = new FormData();
-  //   formData.append("name", name);
-  //   formData.append("email", email);
-  //   formData.append("password", password);
-  //   const config = {
-  //     headers: {
-  //       "content-type": "multipart/form-data",
-  //     },
-  //   };
-  //   return axios.post(url, formData, config);
-  // };
-
   return (
     <form>
       <div>

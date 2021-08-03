@@ -5,6 +5,9 @@ const cors = require("cors");
 // bodyParsers는 express에 기본 포함이 됩니다.더이상 사용하지 않습니다
 // const bodyParsers = require("body-parser");
 
+//bcrypt
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 //multer
 const multer = require("multer");
 const upload = multer({ dest: "./upload" });
@@ -52,26 +55,8 @@ app.post("/api/customers", upload.single("image"), (req, res) => {
   });
 });
 
-//로그인 구현입니다.
-//프론트에서 서버로 데이터를 전송뒤 서버에서 데이터 받아보았습니다.
-app.post("/api/login", (req, res) => {
-  console.log(
-    "[서버] 데이터 수신 성공 아이디 :",
-    req.body.userId,
-    "비밀번호 :",
-    req.body.userPassword
-  );
-  const userdata_id = req.body.userId;
-  const userdata_pw = req.body.userPassword;
-  // db처리
-
-  // 비밀번호 암호화 ( userdata_pw )
-  console.log("비밀번호 암호화 사용할 변수 데이터 : ", userdata_pw);
-  res.send("");
-});
-
-//회원가입 구현입니다.
-//프론트로부터 데이터 수신 및 mysql 회원정보 전송
+//회원가입,비밀번호 암호화 입니다.
+//프론트로부터 데이터 수신 및 mysql 회원정보 추가
 app.post("/api/signup", (req, res) => {
   console.log(
     "[서버]회원가입 데이터 수신 성공 ",
@@ -82,35 +67,74 @@ app.post("/api/signup", (req, res) => {
     "비밀번호 :",
     req.body.signupPassword
   );
+
   const signupData_name = req.body.signupName;
   const signupData_id = req.body.signupId;
   const signupData_pw = req.body.signupPassword;
 
-  let sql = "INSERT INTO USERDATA VALUES(null,?,?,?)";
-  let params = [signupData_name, signupData_id, signupData_pw];
-  connection.query(sql, params, (err, rows, fields) => {
-    res.send(rows);
-    console.log("[db]회원가입 정보 추가 성공");
-  });
+  bcrypt.hash(signupData_pw, saltRounds, (err, hash) => {
+    if (err) {
+      console.log(err);
+    }
 
-  //프론트에서 sql로 데이터추가
+    // let sql = "INSERT INTO userdata VALUES(null,?,?,?)";
+    // let params = [signupData_name, signupData_id, hash];
+    connection.query(
+      "INSERT INTO userdata VALUES(null,?,?,?)",
+      [signupData_name, signupData_id, hash],
+      (err, rows, fields) => {
+        res.send(rows);
+        console.log(
+          "[db]회원가입 정보 추가 성공",
+          "이름 :",
+          signupData_name,
+          "아이디 :",
+          signupData_id,
+          "비밀번호 :",
+          signupData_pw
+        );
+      }
+    );
+  });
 
   // db처리
 
   // 비밀번호 암호화 ( userdata_pw )
-  console.log("비밀번호 암호화 사용할 변수 데이터 : ", signupData_pw);
   // res.send("");
 });
 
-// app.post("/api/signup", (req, res) => {
-//   const signupName = req.body.signupName;
-//   const signupId = req.body.signupId;
-//   const signupPw = req.body.signupPassword;
+//로그인, 비밀번호 암호화 구현입니다.
 
-//   let sql = "INSERT INTO userdata VALUES(null,?,?,?)";
-//   let params = [signupName, signupId, signupPw];
-//   connection.query(sql, params, (err, rows, fields) => {
-//     res.send(rows);
-//     console.log("[db]회원가입 정보 추가 성공");
-//   });
-// });
+app.post("/api/login", (req, res) => {
+  console.log(
+    "[서버] 데이터 수신 성공 아이디 :",
+    req.body.userId,
+    "비밀번호 :",
+    req.body.userPassword
+  );
+  const userdata_id = req.body.userId;
+  const userdata_pw = req.body.userPassword;
+
+  connection.query(
+    "SELECT * FROM userdata WHERE email =?",
+    userdata_id,
+    (err, result) => {
+      if (err) {
+        res.send({ err: err });
+      }
+
+      if (result.length > 0) {
+        bcrypt.compare(userdata_pw, result[0].password, (err, response) => {
+          if (response) {
+            console.log("[서버] email과 password 일치");
+            res.send({ message: "email과 password 일치합니다." });
+          } else {
+            res.send({ message: "틀린 아이디/비밀번호 입니다" });
+          }
+        });
+      } else {
+        res.send({ message: "유저가 존재하지 않습니다 " });
+      }
+    }
+  );
+});
