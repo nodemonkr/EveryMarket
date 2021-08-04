@@ -33,6 +33,15 @@ const Login = () => {
       .catch();
   };
 
+  // const onClickLogout = (e) => {
+  //   e.preventDefault();
+  //   console.log("로그아웃 버튼이 발동되었습니다.");
+  //   axios
+  //     .post("/api/logout")
+  //     .then((res) => console.log(res))
+  //     .catch();
+  // };
+
   return (
     <form>
       <div>
@@ -57,6 +66,9 @@ const Login = () => {
         <button type="button" onClick={onClickLogin}>
           로그인
         </button>
+        {/* <button type="button" onClick={onClickLogout}>
+          로그아웃
+        </button> */}
         <button>
           <Link to="/signup"> 회원가입</Link>
         </button>

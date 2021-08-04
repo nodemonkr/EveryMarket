@@ -8,12 +8,13 @@ const cors = require("cors");
 //bcrypt
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+
 //multer
 const multer = require("multer");
 const upload = multer({ dest: "./upload" });
 
 // 서버포트
-const port = 5000;
+const port = 4000;
 app.listen(port, () => console.log(`listening on port ${port}`));
 
 app.use(express.json());
@@ -71,30 +72,26 @@ app.post("/api/signup", (req, res) => {
   const signupData_name = req.body.signupName;
   const signupData_id = req.body.signupId;
   const signupData_pw = req.body.signupPassword;
-
+  //비밀번호 암호화 입니다.
   bcrypt.hash(signupData_pw, saltRounds, (err, hash) => {
     if (err) {
       console.log(err);
     }
 
-    // let sql = "INSERT INTO userdata VALUES(null,?,?,?)";
-    // let params = [signupData_name, signupData_id, hash];
-    connection.query(
-      "INSERT INTO userdata VALUES(null,?,?,?)",
-      [signupData_name, signupData_id, hash],
-      (err, rows, fields) => {
-        res.send(rows);
-        console.log(
-          "[db]회원가입 정보 추가 성공",
-          "이름 :",
-          signupData_name,
-          "아이디 :",
-          signupData_id,
-          "비밀번호 :",
-          signupData_pw
-        );
-      }
-    );
+    let sql = "INSERT INTO userdata VALUES(null,?,?,?)";
+    let params = [signupData_name, signupData_id, hash];
+    connection.query(sql, params, (err, rows, fields) => {
+      res.send(rows);
+      console.log(
+        "[db]회원가입 정보 추가 성공",
+        "이름 :",
+        signupData_name,
+        "아이디 :",
+        signupData_id,
+        "비밀번호 :",
+        signupData_pw
+      );
+    });
   });
 
   // db처리
@@ -104,7 +101,6 @@ app.post("/api/signup", (req, res) => {
 });
 
 //로그인, 비밀번호 암호화 구현입니다.
-
 app.post("/api/login", (req, res) => {
   console.log(
     "[서버] 데이터 수신 성공 아이디 :",
@@ -121,19 +117,20 @@ app.post("/api/login", (req, res) => {
     (err, result) => {
       if (err) {
         res.send({ err: err });
-      }
-
-      if (result.length > 0) {
-        bcrypt.compare(userdata_pw, result[0].password, (err, response) => {
-          if (response) {
-            console.log("[서버] email과 password 일치");
-            res.send({ message: "email과 password 일치합니다." });
-          } else {
-            res.send({ message: "틀린 아이디/비밀번호 입니다" });
-          }
-        });
       } else {
-        res.send({ message: "유저가 존재하지 않습니다 " });
+        //아이디가 일치한다면 비밀번호가 일치하는지 확인합니다.
+        if (result.length > 0) {
+          bcrypt.compare(userdata_pw, result[0].password, (err, response) => {
+            if (response) {
+              console.log("[서버] email과 password 일치");
+              res.send({ message: "email과 password 일치합니다." });
+            } else {
+              res.send({ message: "틀린 아이디/비밀번호 입니다" });
+            }
+          });
+        } else {
+          res.send({ message: "유저가 존재하지 않습니다 " });
+        }
       }
     }
   );

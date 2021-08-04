@@ -6,7 +6,7 @@ import Customer from "./Customer/Customer";
 function HomeScreen() {
   const [customers, setCustomers] = useState("");
 
-  //5000포트 노드 서버에서 id.name.age.image 값 가져옵니다
+  //4000 노드 서버에서 id.name.age.image 값 가져옵니다
   useEffect(() => {
     callApi()
       //callApi를 호출하여 setCustomers에 값을 넣어주었습니다
