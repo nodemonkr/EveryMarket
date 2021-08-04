@@ -5,6 +5,12 @@ const cors = require("cors");
 // bodyParsers는 express에 기본 포함이 됩니다.더이상 사용하지 않습니다
 // const bodyParsers = require("body-parser");
 
+//passport, session
+const passport = require("passport"),
+  LocalStrategy = require("passport-local").Strategy;
+
+app.use(passport.initialize());
+app.use(passport.session());
 //bcrypt
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
