@@ -5,12 +5,6 @@ const cors = require("cors");
 // bodyParsers는 express에 기본 포함이 됩니다.더이상 사용하지 않습니다
 // const bodyParsers = require("body-parser");
 
-//passport, session
-const passport = require("passport"),
-  LocalStrategy = require("passport-local").Strategy;
-
-app.use(passport.initialize());
-app.use(passport.session());
 //bcrypt
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
@@ -106,7 +100,8 @@ app.post("/api/signup", (req, res) => {
   // res.send("");
 });
 
-//로그인, 비밀번호 암호화 구현입니다.
+// 로그인, 비밀번호 암호화 구현입니다.
+
 app.post("/api/login", (req, res) => {
   console.log(
     "[서버] 데이터 수신 성공 아이디 :",
