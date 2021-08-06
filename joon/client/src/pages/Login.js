@@ -21,29 +21,17 @@ const Login = (props) => {
 
   // 데이터 전송 함수
   const onClickLogin = (e) => {
-    const body = {
-      email: email,
-      password: password,
-    };
     e.preventDefault();
     console.log("로그인 버튼이 발동되었습니다.");
-    // axios
-    //   .post("/api/login", {
-    //     userId: userEmail,
-    //     userPassword: userPassword,
-    //     //userpassword: userPassword,
-    //   })
-    //   .then((res) => console.log(res))
-    //   .catch();
+    axios
+      .post("/api/login", {
+        userId: userEmail,
+        userPassword: userPassword,
 
-    dispatch(loginUser(body)).then((res) => {
-      console.log(res);
-      if (res.payload.loginSuccess) {
-        props.history.push("/");
-      } else {
-        alert(res.payload.message);
-      }
-    });
+        //userpassword: userPassword,
+      })
+      .then((res) => console.log(res))
+      .catch();
   };
 
   return (

@@ -5,6 +5,9 @@ const cors = require("cors");
 // bodyParsers는 express에 기본 포함이 됩니다.더이상 사용하지 않습니다
 // const bodyParsers = require("body-parser");
 
+//token
+const jwt = require("jsonwebtoken");
+
 //bcrypt
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
@@ -123,14 +126,34 @@ app.post("/api/login", (req, res) => {
         if (result.length > 0) {
           bcrypt.compare(userdata_pw, result[0].password, (err, response) => {
             if (response) {
+              const accessToken = jwt.sign(
+                {
+                  userdata_id,
+                },
+                "YOUR_SECRET_KEY"
+              );
+              res.cookie("user", accessToken);
+              res.status(201).json({
+                result: "ok",
+                accessToken,
+              });
               console.log("[서버] email과 password 일치");
-              res.send({ message: "email과 password 일치합니다." });
+              res.json({
+                loginSuccess: true,
+                message: "email과 password 일치합니다.",
+              });
             } else {
-              res.send({ message: "틀린 아이디/비밀번호 입니다" });
+              res.json({
+                loginSuccess: false,
+                message: "틀린 아이디/비밀번호 입니다",
+              });
             }
           });
         } else {
-          res.send({ message: "유저가 존재하지 않습니다 " });
+          res.json({
+            loginSuccess: false,
+            message: "유저가 존재하지 않습니다 ",
+          });
         }
       }
     }
