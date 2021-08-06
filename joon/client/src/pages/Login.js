@@ -4,8 +4,8 @@ import { useDispatch, connect } from "react-redux";
 import { loginUser } from "../auth/actions/user-action";
 import axios from "axios";
 
-const Login = () => {
-  // const dispatch = useDispatch();
+const Login = (props) => {
+  const dispatch = useDispatch();
 
   // 데이터 저장공간
   const [userEmail, setUserEmail] = useState("");
@@ -19,31 +19,35 @@ const Login = () => {
     setUserPassword(e.currentTarget.value);
   };
 
-  // 데이터 전송 테스트 함수
+  // 데이터 전송 함수
   const onClickLogin = (e) => {
+    const body = {
+      email: email,
+      password: password,
+    };
     e.preventDefault();
     console.log("로그인 버튼이 발동되었습니다.");
-    axios
-      .post("/api/login", {
-        userId: userEmail,
-        userPassword: userPassword,
-        //userpassword: userPassword,
-      })
-      .then((res) => console.log(res))
-      .catch();
+    // axios
+    //   .post("/api/login", {
+    //     userId: userEmail,
+    //     userPassword: userPassword,
+    //     //userpassword: userPassword,
+    //   })
+    //   .then((res) => console.log(res))
+    //   .catch();
+
+    dispatch(loginUser(body)).then((res) => {
+      console.log(res);
+      if (res.payload.loginSuccess) {
+        props.history.push("/");
+      } else {
+        alert(res.payload.message);
+      }
+    });
   };
 
-  // const onClickLogout = (e) => {
-  //   e.preventDefault();
-  //   console.log("로그아웃 버튼이 발동되었습니다.");
-  //   axios
-  //     .post("/api/logout")
-  //     .then((res) => console.log(res))
-  //     .catch();
-  // };
-
   return (
-    <form action="/api/login" method="POST">
+    <form>
       <div>
         <input
           name="email"
