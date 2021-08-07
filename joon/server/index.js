@@ -2,11 +2,16 @@ const express = require("express");
 const app = express();
 const mysql = require("mysql");
 const cors = require("cors");
+const { auth } = require("../client/src/auth/auth");
 // bodyParsers는 express에 기본 포함이 됩니다.더이상 사용하지 않습니다
 // const bodyParsers = require("body-parser");
 
 //token
 const jwt = require("jsonwebtoken");
+
+//cookie
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
 
 //bcrypt
 const bcrypt = require("bcrypt");
@@ -103,7 +108,7 @@ app.post("/api/signup", (req, res) => {
   // res.send("");
 });
 
-// 로그인, 비밀번호 암호화 구현입니다.
+// 로그인, 비밀번호 암호화, 쿠키 구현입니다.
 
 app.post("/api/login", (req, res) => {
   console.log(
@@ -116,32 +121,33 @@ app.post("/api/login", (req, res) => {
   const userdata_pw = req.body.userPassword;
 
   connection.query(
-    "SELECT * FROM userdata WHERE email =?",
+    "SELECT * FROM userdata WHERE email = ?",
     userdata_id,
     (err, result) => {
       if (err) {
-        res.send({ err: err });
+        res.send({ err: "hi" });
       } else {
         //아이디가 일치한다면 비밀번호가 일치하는지 확인합니다.
         if (result.length > 0) {
+          //비밀번호 암호화 입니다.
           bcrypt.compare(userdata_pw, result[0].password, (err, response) => {
             if (response) {
+              //쿠키를 생성하였습니다.
               const accessToken = jwt.sign(
                 {
                   userdata_id,
+                  userdata_pw,
                 },
-                "YOUR_SECRET_KEY"
+                "YOUR_SECRET_KEY",
+                { expiresIn: "1m", issuer: "토큰발급자" }
               );
               res.cookie("user", accessToken);
               res.status(201).json({
-                result: "ok",
+                loginSuccess: true,
+                message: "email과 password 일치합니다.",
                 accessToken,
               });
               console.log("[서버] email과 password 일치");
-              res.json({
-                loginSuccess: true,
-                message: "email과 password 일치합니다.",
-              });
             } else {
               res.json({
                 loginSuccess: false,
@@ -159,3 +165,7 @@ app.post("/api/login", (req, res) => {
     }
   );
 });
+
+// app.post("api/auth", auth, (req, res) => {
+//   res.status(200).json(console.log("콘솔 성공"));
+// });

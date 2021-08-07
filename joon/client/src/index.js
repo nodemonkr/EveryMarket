@@ -3,9 +3,11 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import store from "../src/auth/store";
+import axios from "axios";
 
 //auth stuff
 import { Provider } from "react-redux";
+axios.defaults.withCredentials = true;
 
 ReactDOM.render(
   <Provider store={store}>
