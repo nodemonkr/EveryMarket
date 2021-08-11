@@ -1,20 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
 import App from "./App";
-import store from "../src/auth/store";
-import axios from "axios";
 
-//auth stuff
-import { Provider } from "react-redux";
-axios.defaults.withCredentials = true;
+// bootstrap
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./_base.scss";
 
-ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById("root")
-);
+ReactDOM.render(<App />, document.getElementById("root"));
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

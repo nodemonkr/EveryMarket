@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Customer from "./Customer/Customer";
+import PupularVideos from "./customer/PopularVideos";
 // import Upload from "../pages/Upload";
 
 function HomeScreen() {
@@ -27,7 +27,12 @@ function HomeScreen() {
       {customers
         ? customers.map((c) => {
             return (
-              <Customer key={c.id} name={c.name} age={c.age} image={c.image} />
+              <PupularVideos
+                key={c.id}
+                name={c.name}
+                age={c.age}
+                image={c.image}
+              />
             );
           })
         : ""}

@@ -5,7 +5,7 @@ import { loginUser } from "../auth/actions/user-action";
 import axios from "axios";
 
 const Login = (props) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   // 데이터 저장공간
   const [userEmail, setUserEmail] = useState("");

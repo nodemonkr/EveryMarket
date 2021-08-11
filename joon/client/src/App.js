@@ -1,40 +1,23 @@
-import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Dashboard from "./pages/Dashboard";
-import Upload from "./pages/Upload";
-import Auction from "./pages/Auction";
+import React from "react";
+import Header from "./components/header/Header";
+import Sidebar from "./components/sidebar/Sidebar";
+import HomeScreen from "./components/screens/homeScreen/HomeScreen";
+import "./_app.scss";
 
-//axios
-// import Axios from "axios";
-
-//Pages
-import Home from "./pages/Home";
+//bootstrap
+import { Container } from "react-bootstrap";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/signup">
-          <Signup />
-        </Route>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/dashboard">
-          <Dashboard />
-        </Route>
-        <Route path="/upload">
-          <Upload />
-        </Route>
-        <Route path="/auction">
-          <Auction />
-        </Route>
-        <Route path="/">
-          <Home />
-        </Route>
-      </Switch>
-    </BrowserRouter>
+    <>
+      <Header />
+      <div className="app__container border border-info">
+        <Sidebar />
+        <Container fluid className="app__main border border-warning">
+          <HomeScreen />
+        </Container>
+      </div>
+    </>
   );
 }
 
