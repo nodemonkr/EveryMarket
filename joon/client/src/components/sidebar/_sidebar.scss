@@ -1,0 +1,64 @@
+@import "../../base.scss";
+
+.sidebar {
+  background: $black-secondary;
+
+  display: flex;
+  flex-direction: column;
+
+  width: 250px;
+  height: 90vh;
+  padding-top: 2rem;
+
+  transition: transform 0.2s ease-in;
+  li {
+    display: flex;
+    align-items: center;
+
+    padding: 0.6rem 1.5rem;
+    margin: 0.2rem 0;
+    cursor: pointer;
+
+    span {
+      margin-left: 1rem;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.4px;
+    }
+
+    &:hover {
+      background-color: $border-color;
+    }
+  }
+  hr {
+    background-color: $border-color;
+  }
+
+  &.open {
+    transform: translate(0);
+  }
+}
+
+@media (max-width: $breakpoint-medium) {
+  .sidebar {
+    width: 90px;
+    li {
+      justify-content: center;
+    }
+
+    //medium 크기일때는 sidebar의 로고만 보이고 소제목들은 사라집니다.
+    span {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-small) {
+  .sidebar {
+    transform: translate(-100%);
+
+    //position fixed를 설정 안하면 menu바가 없어도 가로 길이를 차지합니다. (직접 확인 해야합니다)
+    position: fixed;
+    z-index: 000;
+  }
+} ;
