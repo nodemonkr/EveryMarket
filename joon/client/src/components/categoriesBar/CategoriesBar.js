@@ -1,19 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 import "./_categoriesBar.scss";
 
+const keywords = [
+  "All",
+  "React",
+  "JS",
+  "MYSQL",
+  "MariaDB",
+  "All",
+  "React",
+  "JS",
+  "MYSQL",
+  "MariaDB",
+  "All",
+  "React",
+  "JS",
+  "MYSQL",
+  "MariaDB",
+  "All",
+  "React",
+  "JS",
+  "MYSQL",
+  "MariaDB",
+  "All",
+  "React",
+  "JS",
+  "MYSQL",
+  "MariaDB",
+  "All",
+  "React",
+  "JS",
+  "MYSQL",
+  "MariaDB",
+];
+
 const CategoriesBar = () => {
-  const keywords = ["All", "React", "JS", "MYSQL", "MariaDB"];
+  const [activeElement, setActiveElement] = useState("All");
 
+  const handleClick = (value) => {
+    setActiveElement(value);
+  };
   return (
-
-
-const [active]
-
-
     //map을 이용해 구현해줍니다.
     <div className="CategoriesBar">
       {keywords.map((value, i) => (
-        <span key={i}>{value}</span>
+        <span
+          onClick={() => handleClick(value)}
+          key={i}
+          className={activeElement === value ? "active" : ""}
+        >
+          {value}
+        </span>
       ))}
     </div>
   );
