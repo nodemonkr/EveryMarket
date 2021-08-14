@@ -13,6 +13,7 @@ const Vieos = () => {
         />
         <span>05:43</span>
       </div>
+
       <div className="video__title">
         Create app in 5 minutes #made by Chintu
       </div>

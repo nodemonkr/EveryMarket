@@ -18,3 +18,15 @@ body {
   font-family: "Roboto", sans-serif;
   letter-spacing: 0.1px;
 }
+
+@mixin line-clamp($number) {
+  //제목을 한줄로 바꾼뒤 프레임에서 넘어가는곳은 ...으로 표기
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: $number;
+  -webkit-box-orient: vertical;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}

@@ -1,6 +1,7 @@
 @import "../../base.scss";
 
 .sidebar {
+  border-right: none;
   background: $black-secondary;
 
   display: flex;
