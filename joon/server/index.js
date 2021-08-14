@@ -111,7 +111,7 @@ connection.connect();
 
 // 로그인, 비밀번호 암호화, 쿠키 구현입니다.
 
-app.post("/api/login", (req, res) => {
+app.post("/api/auth", (req, res) => {
   console.log(
     "[서버] 데이터 수신 성공 아이디 :",
     req.body.email,
