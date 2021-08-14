@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const mysql = require("mysql");
 const cors = require("cors");
-const { auth } = require("../client/src/auth/auth");
+// const { auth } = require("../client/src/auth/auth");
 // bodyParsers는 express에 기본 포함이 됩니다.더이상 사용하지 않습니다
 // const bodyParsers = require("body-parser");
 
@@ -44,81 +44,82 @@ const connection = mysql.createConnection({
 connection.connect();
 
 //sql 데이터베이스에서 서버로 데이터 가져옵니다.
-app.get("/api/customers", (req, res) => {
-  connection.query("SELECT * FROM CUSTOMER", (err, rows, fields) => {
-    res.send(rows);
-  });
-});
+// app.get("/api/customers", (req, res) => {
+//   connection.query("SELECT * FROM CUSTOMER", (err, rows, fields) => {
+//     res.send(rows);
+//   });
+// });
 
 //프론트에서 sql로 데이터 추가
-app.use("/image", express.static("./upload"));
-app.post("/api/customers", upload.single("image"), (req, res) => {
-  let sql = "INSERT INTO customer VALUES(null,?,?,?)";
-  let image = "/image/" + req.file.filename;
-  let name = req.body.name;
-  let age = req.body.age;
+// app.use("/image", express.static("./upload"));
+// app.post("/api/customers", upload.single("image"), (req, res) => {
+//   let sql = "INSERT INTO customer VALUES(null,?,?,?)";
+//   let image = "/image/" + req.file.filename;
+//   let name = req.body.name;
+//   let age = req.body.age;
 
-  let params = [image, name, age];
-  connection.query(sql, params, (err, rows, fields) => {
-    res.send(rows);
-  });
-});
+//   let params = [image, name, age];
+//   connection.query(sql, params, (err, rows, fields) => {
+//     res.send(rows);
+//   });
+// });
 
 //회원가입,비밀번호 암호화 입니다.
 //프론트로부터 데이터 수신 및 mysql 회원정보 추가
-app.post("/api/signup", (req, res) => {
-  console.log(
-    "[서버]회원가입 데이터 수신 성공 ",
-    "이름 :",
-    req.body.signupName,
-    "아이디 :",
-    req.body.signupId,
-    "비밀번호 :",
-    req.body.signupPassword
-  );
+// app.post("/api/signup", (req, res) => {
+//   console.log(
+//     "[서버]회원가입 데이터 수신 성공 ",
+//     "이름 :",
+//     req.body.signupName,
+//     "아이디 :",
+//     req.body.signupId,
+//     "비밀번호 :",
+//     req.body.signupPassword
+//   );
 
-  const signupData_name = req.body.signupName;
-  const signupData_id = req.body.signupId;
-  const signupData_pw = req.body.signupPassword;
-  //비밀번호 암호화 입니다.
-  bcrypt.hash(signupData_pw, saltRounds, (err, hash) => {
-    if (err) {
-      console.log(err);
-    }
+// const signupData_name = req.body.signupName;
+// const signupData_id = req.body.signupId;
+// const signupData_pw = req.body.signupPassword;
 
-    let sql = "INSERT INTO userdata VALUES(null,?,?,?)";
-    let params = [signupData_name, signupData_id, hash];
-    connection.query(sql, params, (err, rows, fields) => {
-      res.send(rows);
-      console.log(
-        "[db]회원가입 정보 추가 성공",
-        "이름 :",
-        signupData_name,
-        "아이디 :",
-        signupData_id,
-        "비밀번호 :",
-        signupData_pw
-      );
-    });
-  });
+//비밀번호 암호화 입니다.
+// bcrypt.hash(signupData_pw, saltRounds, (err, hash) => {
+//   if (err) {
+//     console.log(err);
+//   }
 
-  // db처리
+//   let sql = "INSERT INTO userdata VALUES(null,?,?,?)";
+//   let params = [signupData_name, signupData_id, hash];
+//   connection.query(sql, params, (err, rows, fields) => {
+//     res.send(rows);
+//     console.log(
+//       "[db]회원가입 정보 추가 성공",
+//       "이름 :",
+//       signupData_name,
+//       "아이디 :",
+//       signupData_id,
+//       "비밀번호 :",
+//       signupData_pw
+//     );
+//   });
+// });
 
-  // 비밀번호 암호화 ( userdata_pw )
-  // res.send("");
-});
+// db처리
+
+// 비밀번호 암호화 ( userdata_pw )
+// res.send("");
+// });
 
 // 로그인, 비밀번호 암호화, 쿠키 구현입니다.
 
 app.post("/api/login", (req, res) => {
   console.log(
     "[서버] 데이터 수신 성공 아이디 :",
-    req.body.userId,
+    req.body.email,
     "비밀번호 :",
-    req.body.userPassword
+    req.body.password
   );
-  const userdata_id = req.body.userId;
-  const userdata_pw = req.body.userPassword;
+  const userdata_id = req.body.email;
+  const userdata_pw = req.body.password;
 
   connection.query(
     "SELECT * FROM userdata WHERE email = ?",
@@ -166,6 +167,13 @@ app.post("/api/login", (req, res) => {
   );
 });
 
-// app.post("api/auth", auth, (req, res) => {
-//   res.status(200).json(console.log("콘솔 성공"));
+// app.get("/api/login", (req, res, next) => {
+//   let token = req.accessToken;
+
+//   let decoded = jwt.verify(token, "YOUR_SECRET_KEY");
+//   if (decoded) {
+//     res.send("권한이 있어서 api 수행 가능");
+//   } else {
+//     res.send("권한이 없습니다.");
+//   }
 // });
