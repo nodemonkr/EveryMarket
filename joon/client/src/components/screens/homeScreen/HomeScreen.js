@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CategoriesBar from "../../categoriesBar/CategoriesBar";
 import Video from "../../video/Video";
 
