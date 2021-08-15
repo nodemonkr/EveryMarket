@@ -14,17 +14,18 @@ const LoginScreen = () => {
       email: email,
       password: password,
     };
+
     dispatch(login(body));
     console.log("로그인 버튼이 발동되었습니다.");
   };
 
   const history = useHistory();
 
-  useEffect(() => {
-    if (accessToken) {
-      history.push("/");
-    }
-  }, [accessToken]);
+  // useEffect(() => {
+  //   if (accessToken) {
+  //     history.push("/");
+  //   }
+  // }, [accessToken]);
 
   // 데이터 저장공간
   const [email, setEmail] = useState("");

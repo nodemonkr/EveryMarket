@@ -12,15 +12,20 @@ const init = {
 };
 
 export const authReducer = (state = init, action) => {
-  switch (action.type) {
+  const { type, payload } = action;
+
+  switch (type) {
     case LOGIN_REQUEST:
       return {
         ...state,
         loading: true,
       };
     case LOGIN_SUCCESS:
-      return { ...state, accessToken: action.payload, loading: false };
-
+      return {
+        ...state,
+        accessToken: payload,
+        loading: false,
+      };
     case LOGIN_FAIL:
       return {
         ...state,

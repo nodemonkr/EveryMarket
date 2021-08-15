@@ -144,21 +144,18 @@ app.post("/api/auth", (req, res) => {
               );
               res.cookie("user", accessToken);
               res.status(201).json({
-                loginSuccess: true,
                 message: "email과 password 일치합니다.",
                 accessToken,
               });
               console.log("[서버] email과 password 일치");
             } else {
               res.json({
-                loginSuccess: false,
                 message: "틀린 아이디/비밀번호 입니다",
               });
             }
           });
         } else {
           res.json({
-            loginSuccess: false,
             message: "유저가 존재하지 않습니다 ",
           });
         }
