@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 const LoginScreen = () => {
   const dispatch = useDispatch();
 
-  const accessToken = useSelector((state) => state.auth.accessToken);
+  // const accessToken = useSelector((state) => state.auth.accessToken);
 
   const handleLogin = () => {
     let body = {

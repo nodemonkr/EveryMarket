@@ -6,15 +6,15 @@ import {
 } from "../actionType";
 
 const init = {
-  accessToken: null,
-  user: null,
+  loginSuccess: false,
+  token: null,
   loading: false,
 };
 
 export const authReducer = (state = init, action) => {
-  const { type, payload } = action;
+  // const { type, payload } = action;
 
-  switch (type) {
+  switch (action.type) {
     case LOGIN_REQUEST:
       return {
         ...state,
@@ -23,13 +23,15 @@ export const authReducer = (state = init, action) => {
     case LOGIN_SUCCESS:
       return {
         ...state,
-        accessToken: payload,
+        loginSuccess: true,
+        token: action.payload,
         loading: false,
       };
     case LOGIN_FAIL:
       return {
         ...state,
-        accessToken: null,
+        loginSuccess: false,
+        token: null,
         loading: false,
         error: action.payload,
       };

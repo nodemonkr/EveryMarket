@@ -132,20 +132,18 @@ app.post("/api/auth", (req, res) => {
         if (result.length > 0) {
           //비밀번호 암호화 입니다.
           bcrypt.compare(userdata_pw, result[0].password, (err, response) => {
-            if (response) {
+            if (res) {
               //쿠키를 생성하였습니다.
               const accessToken = jwt.sign(
                 {
                   userdata_id,
                   userdata_pw,
                 },
-                "YOUR_SECRET_KEY",
-                { expiresIn: "1m", issuer: "토큰발급자" }
+                "YOUR_SECRET_KEY"
               );
-              res.cookie("user", accessToken);
+              res.cookie("accessToken", accessToken);
               res.status(201).json({
-                message: "email과 password 일치합니다.",
-                accessToken,
+                message: "email과 password 일치합니다. ",
               });
               console.log("[서버] email과 password 일치");
             } else {
